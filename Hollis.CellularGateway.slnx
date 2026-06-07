@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Hollis.CellularGateway.AppHost/Hollis.CellularGateway.AppHost.csproj" />
+  <Project Path="Hollis.CellularGateway.AtClient.Test/Hollis.CellularGateway.AtClient.Test.csproj" Id="153c9317-f210-402b-a6b4-924138c56076" />
+  <Project Path="Hollis.CellularGateway.AtClient/Hollis.CellularGateway.AtClient.csproj" />
+  <Project Path="Hollis.CellularGateway.ServiceDefaults/Hollis.CellularGateway.ServiceDefaults.csproj" />
+  <Project Path="Hollis.CellularGateway.WebApi/Hollis.CellularGateway.WebApi.csproj" />
+</Solution>

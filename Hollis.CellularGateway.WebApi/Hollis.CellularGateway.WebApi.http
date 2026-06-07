@@ -1,0 +1,6 @@
+@Hollis.CellularGateway.WebApi_HostAddress = http://localhost:5089
+
+GET {{Hollis.CellularGateway.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
