@@ -1,5 +1,3 @@
-using System.Reflection;
-
 namespace Hollis.CellularGateway.WebApi.Conventions;
 
 /// <summary>

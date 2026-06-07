@@ -11,6 +11,8 @@ public class ShortMessage : EntityBase
 
     public DateTimeOffset? TransmissionTime { get; set; }
 
+    public DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.Now;
+
     public ShortMessageModel.TransmissionDirectionEnum TransmissionDirection { get; set; }
 
     [StringLength(ShortMessageConst.TargetPhoneNumberMaxLength)]

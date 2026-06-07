@@ -1,5 +1,3 @@
-using Hollis.CellularGateway.AtClient;
-
 namespace Hollis.CellularGateway.AtClient.Test;
 
 /// <summary>

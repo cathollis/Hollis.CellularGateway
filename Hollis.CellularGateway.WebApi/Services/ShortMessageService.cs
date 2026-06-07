@@ -22,22 +22,21 @@ public class ShortMessageService(DatabaseContext dbContext, IPublishEndpoint pub
         return ShortMessageModel.FromEntity(entity);
     }
 
-    public async Task<IReadOnlyList<ShortMessageModel>> ListAsync(CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<ShortMessageModel>> ListAsync(Guid simCardId, CancellationToken cancellationToken)
     {
         var entities = await dbContext.ShortMessages
             .AsNoTracking()
-            .Include(m => m.SimCard)
-            .OrderByDescending(m => m.TransmissionTime)
+            .Where(x => x.SimCardId == simCardId)
             .ToListAsync(cancellationToken);
 
         return entities.Select(ShortMessageModel.FromEntity).ToList();
     }
 
-    public async Task<ShortMessageModel?> GetAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<ShortMessageModel?> GetAsync(Guid simCardId, Guid id, CancellationToken cancellationToken)
     {
         var entity = await dbContext.ShortMessages
             .AsNoTracking()
-            .Include(m => m.SimCard)
+            .Where(x => x.SimCardId == simCardId)
             .FirstOrDefaultAsync(m => m.Id == id, cancellationToken);
 
         return entity is null ? null : ShortMessageModel.FromEntity(entity);

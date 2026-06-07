@@ -5,7 +5,6 @@ using Hollis.CellularGateway.WebApi.Conventions;
 using Hollis.CellularGateway.WebApi.Messaging;
 using Hollis.CellularGateway.WebApi.Services;
 using MassTransit;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
@@ -25,19 +24,17 @@ builder.Services.AddControllers(options =>
 builder.Services.AddOpenApi();
 
 // ── EF Core (MariaDB) ─────────────────────────────────────────────────
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? "Server=localhost;Database=CellularGateway;User=root;Password=;";
-builder.Services.AddDbContextFactory<DatabaseContext>(options =>
-    options.UseMySQL(connectionString));
+var connectionString = builder.Configuration.GetConnectionString("MySql");
+builder.Services.AddDbContextFactory<DatabaseContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 // ── Services ───────────────────────────────────────────────────────────
 builder.Services.AddScoped<IShortMessageService, ShortMessageService>();
 builder.Services.AddScoped<ISimCardService, SimCardService>();
 
 // ── AtClient (singleton — one modem connection for the app lifetime) ───
-var modemPort = builder.Configuration.GetValue<string>("Modem:PortName") ?? "COM3";
+var modemPort = builder.Configuration.GetValue<string>("Modem:PortName") ?? "COM8";
 var modemBaudRate = builder.Configuration.GetValue<int?>("Modem:BaudRate") ?? 115200;
-builder.Services.AddSingleton(new AtClient.AtClient(modemPort, modemBaudRate));
+builder.Services.AddSingleton(new AtClient(modemPort, modemBaudRate));
 builder.Services.AddHostedService<ModemBackgroundService>();
 
 // ── MassTransit (in-memory bus) ────────────────────────────────────────
